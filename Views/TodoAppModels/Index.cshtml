@@ -16,7 +16,7 @@
             <option value="">All</option>
             @foreach (var cat in categories)
             {
-                <!option value="@cat" @(cat.Text == selectedCategory ? "selected" : "")>@cat</!option>
+                <!option value="@cat.Value" @(cat.Value == selectedCategory ? "selected" : "")>@cat.Text</!option>
             }
         </select>
         <label for="priority" class="mr-2">Priority:</label>
@@ -24,7 +24,7 @@
             <option value="">All</option>
             @foreach (var pri in priorities)
             {
-                <!option value="@pri" @(pri.Text == selectedPriority ? "selected" : "")>@pri</!option>
+                <!option value="@pri.Value" @(pri.Value == selectedPriority ? "selected" : "")>@pri.Text</!option>
             }
         </select>
         <button type="submit" class="btn btn-primary">Filter</button>
@@ -37,7 +37,10 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Title)
+                @* @Html.DisplayNameFor(model => model.Title) *@
+                <a asp-action="Index" asp-route-sortOrder="Title" asp-route-category="@selectedCategory" asp-route-priority="@selectedPriority">
+                    @Html.DisplayNameFor(model => model.Title)
+                </a>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Category)
