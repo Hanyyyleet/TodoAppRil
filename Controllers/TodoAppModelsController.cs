@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using TodoAppRil.Data;
 using TodoAppRil.Models;
@@ -20,8 +21,9 @@ namespace TodoAppRil.Controllers
         }
 
         // GET: TodoAppModels
-        public async Task<IActionResult> Index(string category, int? priority)
+        public async Task<IActionResult> Index(string category, int? priority, string sortOrder)
         {
+
             // Get distinct categories and priorities for dropdowns
             var categories = await _context.TodoAppModel
                 .Select(t => t.Category)
@@ -45,7 +47,15 @@ namespace TodoAppRil.Controllers
             {
                 todos = todos.Where(t => t.Priority == priority.Value);
             }
-
+            // Sorting
+            todos = sortOrder switch
+            {
+                "Title" => todos.OrderBy(t => t.Title),
+                "Category" => todos.OrderBy(t => t.Category),
+                "Priority" => todos.OrderBy(t => t.Priority),
+                "DueDate" => todos.OrderBy(t => t.DueDate),
+                _ => todos.OrderBy(t => t.Title)
+            };
             ViewData["Categories"] = new SelectList(categories);
             ViewData["Priorities"] = new SelectList(priorities);
 

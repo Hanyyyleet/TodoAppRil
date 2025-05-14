@@ -27,7 +27,29 @@
                 <!option value="@pri.Value" @(pri.Value == selectedPriority ? "selected" : "")>@pri.Text</!option>
             }
         </select>
-        <button type="submit" class="btn btn-primary">Filter</button>
+        @**@
+        <div class="dropdown ml-2">
+            <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="sortDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Sort By
+            </button>
+            <div class="dropdown-menu" aria-labelledby="sortDropdown">
+                <a class="dropdown-item"
+                   asp-action="Index"
+                   asp-route-sortOrder="Category"
+                   asp-route-category="@selectedCategory"
+                   asp-route-priority="@selectedPriority">
+                    Category
+                </a>
+                <a class="dropdown-item"
+                   asp-action="Index"
+                   asp-route-sortOrder="Priority"
+                   asp-route-category="@selectedCategory"
+                   asp-route-priority="@selectedPriority">
+                    Priority
+                </a>
+            </div>
+        </div>
+
     </div>
 </form>
 <p>
@@ -37,10 +59,7 @@
     <thead>
         <tr>
             <th>
-                @* @Html.DisplayNameFor(model => model.Title) *@
-                <a asp-action="Index" asp-route-sortOrder="Title" asp-route-category="@selectedCategory" asp-route-priority="@selectedPriority">
-                    @Html.DisplayNameFor(model => model.Title)
-                </a>
+                @Html.DisplayNameFor(model => model.Title)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Category)
