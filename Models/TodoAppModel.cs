@@ -13,5 +13,6 @@ namespace TodoAppRil.Models
         public int Priority { get; set; } //1 means low priority 
         [DataType(DataType.Date)]
         public DateTime? DueDate { get; set; }
+        public bool IsCompleted { get; set; }
     }
 }

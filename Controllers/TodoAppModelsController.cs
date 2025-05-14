@@ -59,6 +59,7 @@ namespace TodoAppRil.Controllers
             ViewData["Categories"] = new SelectList(categories);
             ViewData["Priorities"] = new SelectList(priorities);
 
+
             return View(await todos.ToListAsync());
 
             //return View(await _context.TodoAppModel.ToListAsync());
