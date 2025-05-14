@@ -1,0 +1,77 @@
+﻿@model IEnumerable<TodoAppRil.Models.TodoAppModel>
+
+@{
+    ViewData["Title"] = "Index";
+    var categories = ViewData["Categories"] as SelectList;
+    var priorities = ViewData["Priorities"] as SelectList;
+    string selectedCategory = Context.Request.Query["category"];
+    string selectedPriority = Context.Request.Query["priority"];
+}
+
+<h1>To-Do List</h1>
+<form asp-action="Index" method="get" class="mb-3">
+    <div class="form-inline">
+        <label for="category" class="mr-2">Category:</label>
+        <select id="category" name="category" class="form-control mr-2">
+            <option value="">All</option>
+            @foreach (var cat in categories)
+            {
+                <!option value="@cat" @(cat.Text == selectedCategory ? "selected" : "")>@cat</!option>
+            }
+        </select>
+        <label for="priority" class="mr-2">Priority:</label>
+        <select id="priority" name="priority" class="form-control mr-2">
+            <option value="">All</option>
+            @foreach (var pri in priorities)
+            {
+                <!option value="@pri" @(pri.Text == selectedPriority ? "selected" : "")>@pri</!option>
+            }
+        </select>
+        <button type="submit" class="btn btn-primary">Filter</button>
+    </div>
+</form>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Priority)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DueDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Priority)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DueDate)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
